@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RO System Calibration Final</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: -apple-system, sans-serif; margin: 0; padding: 10px; background: #f0f2f5; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 480px; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .section { margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
+        .header { background: #ffec00; padding: 12px; text-align: center; font-weight: bold; font-size: 0.85rem; border-bottom: 1px solid #ddd; color: #000; }
+        table { width: 100%; border-collapse: collapse; }
+        th { font-size: 0.7rem; color: #555; padding: 8px 2px; background: #fafafa; border-bottom: 1px solid #eee; }
+        td { padding: 10px 4px; border-bottom: 1px solid #eee; text-align: center; }
+        input { width: 100%; padding: 12px 5px; text-align: center; font-size: 16px; border: 2px solid #ccc; border-radius: 8px; outline: none; transition: 0.2s; }
+        input:focus { border-color: #007bff; background: #f0f7ff; }
+        .hasil { font-family: monospace; font-weight: bold; font-size: 0.85rem; color: #000; word-break: break-all; }
+        .btn-group { display: flex; flex-direction: column; gap: 5px; }
+        button { border: none; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 0.75rem; cursor: pointer; color: white; }
+        .btn-blue { background: #007bff; }
+        .btn-red { background: #dc3545; }
+        button:active { opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="section">
+        <div class="header">一级RO回收率 &ge; 75%</div>
+        <table>
+            <tr><th>Flow-Prod</th><th>Flow-Dns</th><th>Hasil %</th><th width="80"></th></tr>
+            <tr>
+                <td><input type="number" id="p1" class="ins" placeholder="0"></td>
+                <td><input type="number" id="d1" class="ins" placeholder="0"></td>
+                <td id="res1" class="hasil">-</td>
+                <td><div class="btn-group"><button class="btn-blue" onclick="calcRec(1)">OK</button><button class="btn-red" onclick="reset(1)">Reset</button></div></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <div class="header">二级RO回收率 &ge; 85%</div>
+        <table>
+            <tr><th>Flow-Prod</th><th>Flow-Dns</th><th>Hasil %</th><th width="80"></th></tr>
+            <tr>
+                <td><input type="number" id="p2" class="ins" placeholder="0"></td>
+                <td><input type="number" id="d2" class="ins" placeholder="0"></td>
+                <td id="res2" class="hasil">-</td>
+                <td><div class="btn-group"><button class="btn-blue" onclick="calcRec(2)">OK</button><button class="btn-red" onclick="reset(2)">Reset</button></div></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <div class="header">一级RO脱盐率 &ge; 98%</div>
+        <table>
+            <tr><th>DD-In</th><th>DD-Out</th><th>Hasil %</th><th width="80"></th></tr>
+            <tr>
+                <td><input type="number" id="p3" class="ins" placeholder="0"></td>
+                <td><input type="number" id="d3" class="ins" placeholder="0"></td>
+                <td id="res3" class="hasil">-</td>
+                <td><div class="btn-group"><button class="btn-blue" onclick="calcDes(3)">OK</button><button class="btn-red" onclick="reset(3)">Reset</button></div></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <div class="header">二级RO脱盐率 &ge; 97%</div>
+        <table>
+            <tr><th>DD-In</th><th>DD-Out</th><th>Hasil %</th><th width="80"></th></tr>
+            <tr>
+                <td><input type="number" id="p4" class="ins" placeholder="0"></td>
+                <td><input type="number" id="d4" class="ins" placeholder="0"></td>
+                <td id="res4" class="hasil">-</td>
+                <td><div class="btn-group"><button class="btn-blue" onclick="calcDes(4)">OK</button><button class="btn-red" onclick="reset(4)">Reset</button></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Rumus Recovery: Prod / (Prod + Dns) * 100
+    function calcRec(n) {
+        const p = parseFloat(document.getElementById('p' + n).value);
+        const d = parseFloat(document.getElementById('d' + n).value);
+        const out = document.getElementById('res' + n);
+        if (isNaN(p) || isNaN(d)) return;
+        const total = p + d;
+        out.innerText = (total !== 0) ? ((p / total) * 100).toFixed(8) : "0";
+    }
+
+    // Rumus Desalination: (In - Out) / In * 100
+    function calcDes(n) {
+        const input = parseFloat(document.getElementById('p' + n).value);
+        const output = parseFloat(document.getElementById('d' + n).value);
+        const out = document.getElementById('res' + n);
+        if (isNaN(input) || isNaN(output) || input === 0) return;
+        out.innerText = (((input - output) / input) * 100).toFixed(8);
+    }
+
+    function reset(n) {
+        document.getElementById('p' + n).value = "";
+        document.getElementById('d' + n).value = "";
+        document.getElementById('res' + n).innerText = "-";
+    }
+
+    // Navigasi Arrow & Enter Keyboard
+    const inputs = document.querySelectorAll('.ins');
+    inputs.forEach((input, index) => {
+        input.addEventListener('keydown', (e) => {
+            if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+                if (index < inputs.length - 1) inputs[index + 1].focus();
+            } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+                if (index > 0) inputs[index - 1].focus();
+            } else if (e.key === "Enter") {
+                const sec = Math.ceil((index + 1) / 2);
+                if (sec <= 2) calcRec(sec); else calcDes(sec);
+                if (index < inputs.length - 1) inputs[index + 1].focus();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
