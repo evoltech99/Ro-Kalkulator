@@ -9,7 +9,7 @@
         body { font-family: -apple-system, sans-serif; margin: 0; padding: 10px; background: #f0f2f5; display: flex; justify-content: center; }
         .container { width: 100%; max-width: 480px; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .section { margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
-        .header { background: #ffec00; padding: 12px; text-align: center; font-weight: bold; font-size: 0.85rem; border-bottom: 1px solid #ddd; color: #000; }
+        .header { background:rgb(0, 30, 255); padding: 12px; text-align: center; font-weight: bold; font-size: 0.85rem; border-bottom: 1px solid #ddd; color: #000; }
         table { width: 100%; border-collapse: collapse; }
         th { font-size: 0.7rem; color: #555; padding: 8px 2px; background: #fafafa; border-bottom: 1px solid #eee; }
         td { padding: 10px 4px; border-bottom: 1px solid #eee; text-align: center; }
@@ -27,9 +27,9 @@
 
 <div class="container">
     <div class="section">
-        <div class="header">一级RO回收率 &ge; 75%</div>
+        <div class="header">Primary RO &ge; 75%</div>
         <table>
-            <tr><th>Flow-Prod</th><th>Flow-Dns</th><th>Hasil %</th><th width="80"></th></tr>
+            <tr><th>Product Water </th><th>Reject Water</th><th>Result %</th><th width="80"></th></tr>
             <tr>
                 <td><input type="number" id="p1" class="ins" placeholder="0"></td>
                 <td><input type="number" id="d1" class="ins" placeholder="0"></td>
@@ -40,9 +40,9 @@
     </div>
 
     <div class="section">
-        <div class="header">二级RO回收率 &ge; 85%</div>
+        <div class="header">Secondary RO &ge; 85%</div>
         <table>
-            <tr><th>Flow-Prod</th><th>Flow-Dns</th><th>Hasil %</th><th width="80"></th></tr>
+            <tr><th>Product Water</th><th>Reject Water</th><th>Result %</th><th width="80"></th></tr>
             <tr>
                 <td><input type="number" id="p2" class="ins" placeholder="0"></td>
                 <td><input type="number" id="d2" class="ins" placeholder="0"></td>
@@ -53,9 +53,9 @@
     </div>
 
     <div class="section">
-        <div class="header">一级RO脱盐率 &ge; 98%</div>
+        <div class="header">Primary RO &ge; 98%</div>
         <table>
-            <tr><th>DD-In</th><th>DD-Out</th><th>Hasil %</th><th width="80"></th></tr>
+            <tr><th>DD Inlet</th><th>DD Outlet</th><th>Result %</th><th width="80"></th></tr>
             <tr>
                 <td><input type="number" id="p3" class="ins" placeholder="0"></td>
                 <td><input type="number" id="d3" class="ins" placeholder="0"></td>
@@ -66,9 +66,9 @@
     </div>
 
     <div class="section">
-        <div class="header">二级RO脱盐率 &ge; 97%</div>
+        <div class="header">Secondary RO &ge; 97%</div>
         <table>
-            <tr><th>DD-In</th><th>DD-Out</th><th>Hasil %</th><th width="80"></th></tr>
+            <tr><th>DD-Outlet</th><th>DD Outlet</th><th>Result %</th><th width="80"></th></tr>
             <tr>
                 <td><input type="number" id="p4" class="ins" placeholder="0"></td>
                 <td><input type="number" id="d4" class="ins" placeholder="0"></td>
