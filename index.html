@@ -15,7 +15,7 @@
         td { padding: 10px 4px; border-bottom: 1px solid #eee; text-align: center; }
         input { width: 100%; padding: 12px 5px; text-align: center; font-size: 16px; border: 2px solid #ccc; border-radius: 8px; outline: none; transition: 0.2s; }
         input:focus { border-color: #007bff; background: #f0f7ff; }
-        .hasil { font-family: monospace; font-weight: bold; font-size: 0.85rem; color: #007bff; word-break: break-all; }
+        .hasil { font-family: monospace; font-weight: bold; font-size: 0.85rem; color: #000; word-break: break-all; }
         .btn-red { background: #dc3545; border: none; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 0.75rem; cursor: pointer; color: white; width: 100%; }
         .btn-red:active { opacity: 0.7; }
         .footer-copyright { margin-top: 15px; font-size: 0.75rem; color: #888; text-align: center; }
@@ -82,7 +82,6 @@
 </div>
 
 <script>
-    // Rumus Recovery: (Prod / (Prod + Reject)) * 100
     function calcRec(n) {
         const p = parseFloat(document.getElementById('p' + n).value);
         const d = parseFloat(document.getElementById('d' + n).value);
@@ -97,7 +96,6 @@
         out.innerText = (total !== 0) ? ((p / total) * 100).toFixed(8) : "0";
     }
 
-    // Rumus Desalination: ((In - Out) / In) * 100
     function calcDes(n) {
         const inputVal = parseFloat(document.getElementById('p' + n).value);
         const outputVal = parseFloat(document.getElementById('d' + n).value);
@@ -117,24 +115,23 @@
         document.getElementById('res' + n).innerText = "-";
     }
 
-    // Listener untuk Input Otomatis (LIVE)
     const inputs = document.querySelectorAll('.ins');
     inputs.forEach((input, index) => {
-        // Event saat mengetik/input angka
+        // Efek LIVE: langsung hitung saat ngetik
         input.addEventListener('input', () => {
             const sectionNum = Math.ceil((index + 1) / 2);
             if (sectionNum <= 2) calcRec(sectionNum); 
             else calcDes(sectionNum);
         });
 
-        // Event Navigasi Keyboard
+        // Navigasi
         input.addEventListener('keydown', (e) => {
             if (e.key === "ArrowDown" || e.key === "ArrowRight") {
                 if (index < inputs.length - 1) inputs[index + 1].focus();
             } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
                 if (index > 0) inputs[index - 1].focus();
             } else if (e.key === "Enter") {
-                e.preventDefault(); // Mencegah form submit default
+                e.preventDefault();
                 if (index < inputs.length - 1) inputs[index + 1].focus();
             }
         });
