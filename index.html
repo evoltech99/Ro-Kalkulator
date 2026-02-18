@@ -16,8 +16,6 @@
         input { width: 100%; padding: 12px 5px; text-align: center; font-size: 16px; border: 2px solid #ccc; border-radius: 8px; outline: none; transition: 0.2s; }
         input:focus { border-color: #007bff; background: #f0f7ff; }
         .hasil { font-family: monospace; font-weight: bold; font-size: 0.85rem; color: #000; word-break: break-all; }
-        .btn-red { background: #dc3545; border: none; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 0.75rem; cursor: pointer; color: white; width: 100%; }
-        .btn-red:active { opacity: 0.7; }
         .footer-copyright { margin-top: 15px; font-size: 0.75rem; color: #888; text-align: center; }
     </style>
 </head>
@@ -27,12 +25,11 @@
     <div class="section">
         <div class="header">Primary RO &ge; 75% (Recovery)</div>
         <table>
-            <tr><th>Product Water</th><th>Reject Water</th><th>Result %</th><th width="70"></th></tr>
+            <tr><th>Product Water</th><th>Reject Water</th><th>Result %</th></tr>
             <tr>
                 <td><input type="number" id="p1" class="ins" placeholder="0"></td>
                 <td><input type="number" id="d1" class="ins" placeholder="0"></td>
                 <td id="res1" class="hasil">-</td>
-                <td><button class="btn-red" onclick="reset(1)">Reset</button></td>
             </tr>
         </table>
     </div>
@@ -40,12 +37,11 @@
     <div class="section">
         <div class="header">Secondary RO &ge; 85% (Recovery)</div>
         <table>
-            <tr><th>Product Water</th><th>Reject Water</th><th>Result %</th><th width="70"></th></tr>
+            <tr><th>Product Water</th><th>Reject Water</th><th>Result %</th></tr>
             <tr>
                 <td><input type="number" id="p2" class="ins" placeholder="0"></td>
                 <td><input type="number" id="d2" class="ins" placeholder="0"></td>
                 <td id="res2" class="hasil">-</td>
-                <td><button class="btn-red" onclick="reset(2)">Reset</button></td>
             </tr>
         </table>
     </div>
@@ -53,12 +49,11 @@
     <div class="section">
         <div class="header">Primary RO &ge; 98% (Desalination)</div>
         <table>
-            <tr><th>DD Inlet</th><th>DD Outlet</th><th>Result %</th><th width="70"></th></tr>
+            <tr><th>DD Inlet</th><th>DD Outlet</th><th>Result %</th></tr>
             <tr>
                 <td><input type="number" id="p3" class="ins" placeholder="0"></td>
                 <td><input type="number" id="d3" class="ins" placeholder="0"></td>
                 <td id="res3" class="hasil">-</td>
-                <td><button class="btn-red" onclick="reset(3)">Reset</button></td>
             </tr>
         </table>
     </div>
@@ -66,12 +61,11 @@
     <div class="section">
         <div class="header">Secondary RO &ge; 97% (Desalination)</div>
         <table>
-            <tr><th>DD-Outlet In</th><th>DD Outlet Out</th><th>Result %</th><th width="70"></th></tr>
+            <tr><th>DD-Outlet In</th><th>DD Outlet Out</th><th>Result %</th></tr>
             <tr>
                 <td><input type="number" id="p4" class="ins" placeholder="0"></td>
                 <td><input type="number" id="d4" class="ins" placeholder="0"></td>
                 <td id="res4" class="hasil">-</td>
-                <td><button class="btn-red" onclick="reset(4)">Reset</button></td>
             </tr>
         </table>
     </div>
@@ -109,22 +103,16 @@
         out.innerText = (inputVal !== 0) ? (((inputVal - outputVal) / inputVal) * 100).toFixed(8) : "0";
     }
 
-    function reset(n) {
-        document.getElementById('p' + n).value = "";
-        document.getElementById('d' + n).value = "";
-        document.getElementById('res' + n).innerText = "-";
-    }
-
     const inputs = document.querySelectorAll('.ins');
     inputs.forEach((input, index) => {
-        // Efek LIVE: langsung hitung saat ngetik
+        // Efek LIVE hitung otomatis
         input.addEventListener('input', () => {
             const sectionNum = Math.ceil((index + 1) / 2);
             if (sectionNum <= 2) calcRec(sectionNum); 
             else calcDes(sectionNum);
         });
 
-        // Navigasi
+        // Navigasi Keyboard
         input.addEventListener('keydown', (e) => {
             if (e.key === "ArrowDown" || e.key === "ArrowRight") {
                 if (index < inputs.length - 1) inputs[index + 1].focus();
